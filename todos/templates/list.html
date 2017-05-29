@@ -1,0 +1,39 @@
+
+<div class="filter">
+    <p>FILTER BY </p>
+    <a class="btn btn-lg btn-success" href="{% url 'index' %}?filter=all" role="button" id="{% if filter == 'all' %}active{% endif %}">ALL</a>
+
+    <a class="btn btn-lg btn-success" href="{% url 'index' %}?filter=completed" role="button" id="{% if filter == 'completed' %}active{% endif %}">COMPLETED</a>
+
+    <a class="btn btn-lg btn-success" href="{% url 'index' %}?filter=pending" role="button" id="{% if filter == 'pending' %}active{% endif %}">PENDING</a>
+</div>
+
+
+<div class="row marketing">
+    <div class="todolist list-group">
+        <ul class="list-unstyled">
+        {% if not items %}
+            <div class="alert alert-warning">
+                <p>NO ITEMS IN THE LIST</p>
+            </div>
+
+        {% else %}
+            {% for item in items %}
+                <li class="list-group-item {% if item.completed %}completed{% endif %}">
+                    <div class="completed-check">
+                        <input type="checkbox" {% if item.completed %}checked{% endif %} />
+                    </div>
+                    <div class="todo-title">
+                        <div class="todo-actions">
+                            <a href="{% url 'edit' item.id %}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                            <a href="{% url 'remove' item.id %}"><span class="glyphicon glyphicon-remove"></span> Remove</a>
+                        </div>
+                        <h4 class="list-group-item-heading">{{item.title}}</h4>
+                    </div>
+                </li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+    </div>
+</div>
+
